@@ -57,8 +57,9 @@ export class news extends Component {
   // running constructor
   constructor() {
     super();
-    this.state={
-     
+    this.state = {
+      a: this.a,
+      loading: false
     };
   }
 
@@ -66,12 +67,19 @@ export class news extends Component {
     return (
       <div>
         <div className="container">
-          <h1 class="text-center">NewsLine - Top Headlines</h1>
-          <div className="row">
-            <div className="col-md-4">
-              <NewsItem title="my title" description="My desc" imgUrl="" />
-            </div>
-          </div>
+          <h1 className="text-center">NewsLine - Top Headlines</h1>
+          <div  className="row">
+          {this.state.a.map((element) => {
+            // console.log(element);
+            return (
+              
+                <div className="col-md-4" key={element.url}>
+                  <NewsItem  title={element.title} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} />
+                </div>
+              
+            )
+          })}
+</div>
         </div>
       </div>
     );
