@@ -8,27 +8,25 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-
+  Navigate 
 } from "react-router-dom"
-// import Home from './Components/Home';
+
 
 
 export default class App extends Component {
-  pageNum=6;
+  pageNum = 6;
   render() {
- 
+
     return (
-      
-      // pageNumber=5
+
       <div>
-        {/* this is a class based Component */}
         <Router>
           <Nav />
 
-          {/* <News  country={"in"} category={"science"} pageSize={this.pageNum}/> */}
 
           <Routes>
-            {/* <Route exact path="/home" element={<Home key={"home"} query={"india"} pageSize={this.pageNum}/>} /> */}
+            <Route exact path="/" element={<Navigate to="/home" replace={true} />}>
+            </Route>
             <Route exact path="/home" element={<News key={"homeN"} country={"in"} category={"home"} pageSize={this.pageNum} query={"india"} />} />
             <Route exact path="/general" element={<News key={"general"} country={"in"} category={"general"} pageSize={this.pageNum} />} />
             <Route exact path="/science" element={<News key={"science"} country={"in"} category={"science"} pageSize={this.pageNum} />} />
