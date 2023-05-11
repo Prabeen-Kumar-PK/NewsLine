@@ -4,18 +4,13 @@ import NewsItem from "./NewsItem";
 import Loading from "./Loading";
 import PropTypes from "prop-types";
 
-export class News extends Component {
+export class Home extends Component {
   static defaultProps = {
-    country: "in",
-    category: "general",
-    pageSize: 6,
-    query:'India'
+   query:'India'
   };
   static propTypes = {
-    country: PropTypes.string.isRequired,
-    category: PropTypes.string,
-    pageSize: PropTypes.number,
-    query: PropTypes.string
+    query: PropTypes.string.isRequired
+  
   };
 
   // article variable from sample.json
@@ -32,38 +27,22 @@ export class News extends Component {
       loading: false,
       page: 1,
     };
-    document.title = `NewsLine - ${this.capitalizef(this.props.category)}`;
+    document.title = `NewsLine - ${this.capitalizef(this.props.query)}`;
   }
 
   async updateNews() {
-    if(this.props.category !== "home"){
-      const apUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
-      this.setState({ loading: true });
-      let data = await fetch(apUrl);
-      this.setState({ loading: true });
-      let parsedData = await data.json();
-      console.log(parsedData);
-      this.setState({
-        a: parsedData.articles,
-        loading: false,
-        page: this.state.page,
-        totalArticles: parsedData.totalResults,
-      });
-    }else{
-      const apUrl = `https://newsapi.org/v2/everything?q=${this.props.query}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
-            this.setState({ loading: true });
-            let data = await fetch(apUrl);
-            this.setState({ loading: true });
-            let parsedData = await data.json();
-            console.log(parsedData);
-            this.setState({
-              a: parsedData.articles,
-              loading: false,
-              page: this.state.page,
-              totalArticles: parsedData.totalResults,
-            });
-    }
-   
+    const hoUrl= `https://newsapi.org/v2/everything?q=${this.props.query}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+    this.setState({ loading: true });
+    let data = await fetch(hoUrl);
+    this.setState({ loading: true });
+    let parsedData = await data.json();
+    console.log(parsedData);
+    this.setState({
+      a: parsedData.articles,
+      loading: false,
+      page: this.state.page,
+      totalArticles: parsedData.totalResults,
+    });
   }
 
   // Concept of Component DId Mount
@@ -77,7 +56,7 @@ export class News extends Component {
       <div>
         <div className="container my-3">
           <h1 className="text-center">
-            NewsLine - Top {this.capitalizef(this.props.category)} Headlines
+            NewsLine -  {this.capitalizef(this.props.query)} News
           </h1>
           {this.state.loading && <Loading />}
           <div className="row">
@@ -147,7 +126,7 @@ export class News extends Component {
   }
 }
 
-export default News;
+export default Home;
 
 // image
 // `https://images.creativemarket.com/0.1.0/ps/3373652/1160/772/m1/fpnw/wm1/breaking_news_1_scr-.jpg?1507354627&s=58989dc4123b369f1b12fda40a5a5207`

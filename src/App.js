@@ -10,6 +10,7 @@ import {
   Route,
 
 } from "react-router-dom"
+// import Home from './Components/Home';
 
 
 export default class App extends Component {
@@ -27,7 +28,8 @@ export default class App extends Component {
           {/* <News  country={"in"} category={"science"} pageSize={this.pageNum}/> */}
 
           <Routes>
-            <Route exact path="/home" element={<News key={"home"} country={"in"} category={"general"} pageSize={this.pageNum} />} />
+            {/* <Route exact path="/home" element={<Home key={"home"} query={"india"} pageSize={this.pageNum}/>} /> */}
+            <Route exact path="/home" element={<News key={"homeN"} country={"in"} category={"home"} pageSize={this.pageNum} query={"india"} />} />
             <Route exact path="/general" element={<News key={"general"} country={"in"} category={"general"} pageSize={this.pageNum} />} />
             <Route exact path="/science" element={<News key={"science"} country={"in"} category={"science"} pageSize={this.pageNum} />} />
             <Route exact path="/health" element={<News key={"health"} country={"in"} category={"health"} pageSize={this.pageNum} />} />
