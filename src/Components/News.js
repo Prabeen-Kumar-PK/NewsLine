@@ -62,6 +62,7 @@ export class News extends Component {
               page: this.state.page,
               totalArticles: parsedData.totalResults,
             });
+            
     }
    
   }
