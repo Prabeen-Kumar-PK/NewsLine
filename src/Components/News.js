@@ -9,13 +9,15 @@ export class News extends Component {
     country: "in",
     category: "general",
     pageSize: 6,
-    query: 'India'
+    query: 'India',
+    
   };
   static propTypes = {
     country: PropTypes.string.isRequired,
     category: PropTypes.string,
     pageSize: PropTypes.number,
-    query: PropTypes.string
+    query: PropTypes.string,
+
   };
 
   // article variable from sample.json
@@ -38,11 +40,14 @@ export class News extends Component {
 
   async updateNews() {
     if (this.props.category !== "home") {
-      const apUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+      this.props.setProgress(0);
+      const apUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pagesize=${this.props.pageSize}`;
       this.setState({ loading: true });
       let data = await fetch(apUrl);
+      this.props.setProgress(40);
       this.setState({ loading: true });
       let parsedData = await data.json();
+      this.props.setProgress(80);
       console.log(parsedData);
       this.setState({
         a: parsedData.articles,
@@ -50,12 +55,16 @@ export class News extends Component {
         page: this.state.page,
         totalArticles: parsedData.totalResults,
       });
+      this.props.setProgress(100);
     } else {
-      const apUrl = `https://newsapi.org/v2/everything?q=${this.props.query}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+      const apUrl = `https://newsapi.org/v2/everything?q=${this.props.query}&apiKey=${this.props.apiKey}&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+      this.props.setProgress(0);
       this.setState({ loading: true });
       let data = await fetch(apUrl);
+      this.props.setProgress(40);
       this.setState({ loading: true });
       let parsedData = await data.json();
+      this.props.setProgress(70);
       console.log(parsedData);
       this.setState({
         a: parsedData.articles,
@@ -63,7 +72,7 @@ export class News extends Component {
         page: this.state.page,
         totalArticles: parsedData.totalResults,
       });
-
+      this.props.setProgress(100);
     }
 
   }
@@ -76,10 +85,11 @@ export class News extends Component {
   fetchMoreData =async () => {
     this.setState({page:this.state.page +1})
     if (this.props.category !== "home") {
-      const apUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+      const apUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+
       this.setState({loading:true})
       let data = await fetch(apUrl);
-     
+      
       let parsedData = await data.json();
       console.log(parsedData);
       this.setState({
@@ -88,8 +98,10 @@ export class News extends Component {
         page: this.state.page,
         totalArticles: parsedData.totalResults,
       });
+      this.props.setProgress(100);
     } else {
-      const apUrl = `https://newsapi.org/v2/everything?q=${this.props.query}&apiKey=6c9e8b6f27664b8286e21d73ec60ee2a&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+      const apUrl = `https://newsapi.org/v2/everything?q=${this.props.query}&apiKey=${this.props.apiKey}&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+     
 this.setState({loading:true})
       let data = await fetch(apUrl);
       
@@ -101,7 +113,7 @@ this.setState({loading:true})
         page: this.state.page,
         totalArticles: parsedData.totalResults,
       });
-
+      this.props.setProgress(100);
     }
   };
 
@@ -121,11 +133,14 @@ this.setState({loading:true})
             hasMore={this.state.a.length !== this.totalArticles}
             loader={this.state.loading?<Loading/>:null}
           >
+
             <div className="container my-3">
             <div className="row">
               {this.state.a.map((element) => {
                 return (
-                  <div className="col-md-4" key={element.url}>
+                  <div className="col-md-4" key={this.a.forEach(element => {
+                    return element.length-1;
+                  })}>
                     <NewsItem
                       title={element.title ? element.title : ""}
                       description={
