@@ -14,7 +14,6 @@ const News =(props)=> {
  const [loading, setLoading]= useState(false)
  const [page, setPage]=useState(1)
  const[totalArticles, setTotalArticles]= useState(0)
-//  document.title = `NewsLine - ${capitalizef(props.category)}`;
 
 
 
@@ -62,7 +61,9 @@ const updateNews= async ()=> {
   }
 
   useEffect(()=>{
+    document.title = `NewsLine - ${capitalizef(props.category)}`;
     updateNews();
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
